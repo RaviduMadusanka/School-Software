@@ -190,6 +190,11 @@ public class Student extends javax.swing.JPanel {
         buttonGradient5.setColor1(new java.awt.Color(0, 0, 255));
         buttonGradient5.setColor2(new java.awt.Color(139, 139, 252));
         buttonGradient5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        buttonGradient5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonGradient5ActionPerformed(evt);
+            }
+        });
 
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -838,6 +843,11 @@ public class Student extends javax.swing.JPanel {
             .addComponent(background1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void buttonGradient5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGradient5ActionPerformed
+        // TODO add your handling code here:
+        System.out.println("Hasintha");
+    }//GEN-LAST:event_buttonGradient5ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
