@@ -4,36 +4,89 @@
  */
 package SMMV.OL.form;
 
+import SMMV.Connection.connection_ol;
+import SMMV.OL.model.User_id_Genarator;
+import SMMV.Validation.Validation;
 import com.formdev.flatlaf.FlatClientProperties;
 import java.awt.Color;
+import javax.swing.JOptionPane;
 import javax.swing.table.JTableHeader;
+import java.sql.ResultSet;
+import java.util.Vector;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author user
  */
 public class Teacher extends javax.swing.JPanel {
+    
+    String TID = "";
 
     /**
      * Creates new form Teacher
      */
     public Teacher() {
         initComponents();
-                        setOpaque(false);
-init();
+        setOpaque(false);
+        init();
     }
-    
-    private void init(){
-                   fname_field.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter First Name");
-           lname_field.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter Last Name");
+
+    private void init() {
+
+        buttonGradient1.setEnabled(true);
+        buttonGradient2.setEnabled(false);
+        buttonGradient3.setEnabled(false);
+
+        email_field.setEditable(true);
+        mobile_field.setEditable(true);
+
+        fname_field.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter First Name");
+        lname_field.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter Last Name");
         email_field.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter Email Address");
         mobile_field.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter Mobile");
         line1_field.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter Address Line 1");
-         line2_field.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter Address Line 2");
+        line2_field.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter Address Line 2");
         search_field.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Search Employee");
-                JTableHeader tableHeader = teacher_table.getTableHeader();
+        JTableHeader tableHeader = teacher_table.getTableHeader();
         tableHeader.setBackground(new Color(0, 0, 255));
         tableHeader.setForeground(Color.WHITE);
+
+        try {
+
+            ResultSet rs = connection_ol.search("SELECT * FROM `teacher` INNER JOIN `status` ON `teacher`.`status_status_id` = `status`.`status_id` "
+                    + "INNER JOIN `gender` ON `teacher`.`gender_gender_id` = `gender`.`gender_id`");
+
+            DefaultTableModel model = (DefaultTableModel) teacher_table.getModel();
+            model.setRowCount(0);
+
+            while (rs.next()) {
+                Vector supplierVector = new Vector();
+                supplierVector.add(rs.getString("teacher_id"));
+                supplierVector.add(rs.getString("first_name"));
+                supplierVector.add(rs.getString("last_name"));
+                supplierVector.add(rs.getString("email"));
+                supplierVector.add(rs.getString("mobile"));
+                supplierVector.add(rs.getString("gender.name"));
+                supplierVector.add(rs.getString("status.status"));
+
+                model.addRow(supplierVector);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void clear() {
+        fname_field.setText("");
+        lname_field.setText("");
+        email_field.setText("");
+        mobile_field.setText("");
+        line1_field.setText("");
+        line2_field.setText("");
+        buttonGroup1.clearSelection();
     }
 
     /**
@@ -108,6 +161,11 @@ init();
         jLabel4.setText("Email");
 
         email_field.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        email_field.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                email_fieldActionPerformed(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
@@ -165,11 +223,21 @@ init();
         buttonGradient2.setColor1(new java.awt.Color(0, 0, 153));
         buttonGradient2.setColor2(new java.awt.Color(139, 139, 252));
         buttonGradient2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        buttonGradient2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonGradient2ActionPerformed(evt);
+            }
+        });
 
         buttonGradient3.setText("Deactive");
         buttonGradient3.setColor1(new java.awt.Color(0, 0, 153));
         buttonGradient3.setColor2(new java.awt.Color(139, 139, 252));
         buttonGradient3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        buttonGradient3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonGradient3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout background2Layout = new javax.swing.GroupLayout(background2);
         background2.setLayout(background2Layout);
@@ -278,24 +346,35 @@ init();
 
         search_field.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
+        jScrollPane1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jScrollPane1MouseClicked(evt);
+            }
+        });
+
         teacher_table.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         teacher_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "First Name", "Last Name", "Email", "Mobile", "Gender", "Line 1", "Line 2", "Status"
+                "ID", "First Name", "Last Name", "Email", "Mobile", "Gender", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        teacher_table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                teacher_tableMousePressed(evt);
             }
         });
         jScrollPane1.setViewportView(teacher_table);
@@ -361,9 +440,146 @@ init();
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonGradient1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGradient1ActionPerformed
-        // TODO add your handling code here:
-        System.out.println("hello");
+        if (fname_field.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Your Fast Name", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (lname_field.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Your Last Name", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (email_field.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Your Email Address", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (!email_field.getText().matches(Validation.EMAIL_VALIDATION.validate())) {
+            JOptionPane.showMessageDialog(this, "Your Email Address Is Invalide", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (mobile_field.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Your Mobile Number", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (!mobile_field.getText().matches(Validation.MOBILE_NUMBER_VALIDATION.validate())) {
+            JOptionPane.showMessageDialog(this, "Your Mobile Number Is Invalide", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (line1_field.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Your Address Line 1", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (line2_field.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Your Address Line 2", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (!male.isSelected() && !female.isSelected()) {
+            JOptionPane.showMessageDialog(this, "Please Select Your Gender", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else {
+
+            int genser = 0;
+
+            if (male.isSelected()) {
+                genser = 1;
+            }
+            if (female.isSelected()) {
+                genser = 2;
+            }
+
+            try {
+
+                connection_ol.iud("INSERT INTO `teacher` (`teacher_id`,`first_name`,`last_name`,`email`,`mobile`,`line_1`,`line_2`,`gender_gender_id`,`status_status_id`) "
+                        + "VALUES ('" + User_id_Genarator.User_id_Genarator() + "','" + fname_field.getText() + "','" + lname_field.getText() + "','" + email_field.getText() + "',"
+                        + "'" + mobile_field.getText() + "','" + line1_field.getText() + "','" + line2_field.getText() + "','" + genser + "','1')");
+
+                System.out.println("Success");
+                clear();
+
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
+        }
     }//GEN-LAST:event_buttonGradient1ActionPerformed
+
+    private void email_fieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_email_fieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_email_fieldActionPerformed
+
+    private void jScrollPane1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane1MouseClicked
+
+    }//GEN-LAST:event_jScrollPane1MouseClicked
+
+    private void teacher_tableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_teacher_tableMousePressed
+        if (evt.getClickCount() == 2) {
+
+            buttonGradient3.setEnabled(true);
+            buttonGradient2.setEnabled(true);
+            buttonGradient1.setEnabled(false);
+
+            email_field.setEditable(false);
+            mobile_field.setEditable(false);
+
+            int row = teacher_table.getSelectedRow();
+            
+            TID = String.valueOf(teacher_table.getValueAt(row, 0));
+
+            try {
+
+                ResultSet rs3 = connection_ol.search("SELECT * FROM `teacher` WHERE `teacher_id` = '" + String.valueOf(teacher_table.getValueAt(row, 0)) + "'");
+
+                if (rs3.next()) {
+                    fname_field.setText(String.valueOf(teacher_table.getValueAt(row, 1)));
+                    lname_field.setText(String.valueOf(teacher_table.getValueAt(row, 2)));
+                    email_field.setText(String.valueOf(teacher_table.getValueAt(row, 3)));
+                    mobile_field.setText(String.valueOf(teacher_table.getValueAt(row, 4)));
+
+                    line1_field.setText(rs3.getString("line_1"));
+                    line2_field.setText(rs3.getString("line_2"));
+
+                    if (String.valueOf(teacher_table.getValueAt(row, 5)).equals("MALE")) {
+                        male.setSelected(true);
+                    } else if (String.valueOf(teacher_table.getValueAt(row, 5)).equals("FEMALE")) {
+                        female.setSelected(true);
+                    }
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+    }//GEN-LAST:event_teacher_tableMousePressed
+
+    private void buttonGradient3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGradient3ActionPerformed
+
+        try {
+            connection_ol.iud("UPDATE `teacher` SET `status_status_id`='2' WHERE  `teacher_id`='" + TID + "'");
+            clear();
+            init();
+            JOptionPane.showMessageDialog(this, "This Teacher Removed.", "Success", JOptionPane.OK_OPTION);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }//GEN-LAST:event_buttonGradient3ActionPerformed
+
+    private void buttonGradient2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGradient2ActionPerformed
+        String fname = fname_field.getText();
+        String lname = lname_field.getText();
+        String line1 = line1_field.getText();
+        String line2 = line2_field.getText();
+
+        if (fname.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Your Fast Name", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (lname.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Your Last Name", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (line1.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Your Address Line 1", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (line2.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Your Address Line 2", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else {
+
+            try {
+
+                connection_ol.iud("UPDATE `school_project(o/l)`.`teacher` SET `first_name`='"+fname+"' , `last_name`='"+lname+"' , `line_1`='"+line1+"' , `line_2`='"+line2+"' "
+                        + "WHERE  `teacher_id`='"+TID+"'");
+
+                clear();
+                init();
+                
+                JOptionPane.showMessageDialog(this, "Update Success.", "Success", JOptionPane.OK_OPTION);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+    }//GEN-LAST:event_buttonGradient2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
