@@ -155,6 +155,11 @@ init();
         buttonGradient1.setColor1(new java.awt.Color(0, 0, 153));
         buttonGradient1.setColor2(new java.awt.Color(139, 139, 252));
         buttonGradient1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        buttonGradient1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonGradient1ActionPerformed(evt);
+            }
+        });
 
         buttonGradient2.setText("Update");
         buttonGradient2.setColor1(new java.awt.Color(0, 0, 153));
@@ -354,6 +359,11 @@ init();
             .addComponent(background1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void buttonGradient1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGradient1ActionPerformed
+        // TODO add your handling code here:
+        System.out.println("hello");
+    }//GEN-LAST:event_buttonGradient1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

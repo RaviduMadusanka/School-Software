@@ -353,6 +353,9 @@
                   <Font name="Tahoma" size="14" style="1"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonGradient1ActionPerformed"/>
+              </Events>
             </Component>
             <Component class="SMMV.Component.ButtonGradient" name="buttonGradient2">
               <Properties>
