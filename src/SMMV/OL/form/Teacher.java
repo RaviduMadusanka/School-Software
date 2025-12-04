@@ -362,7 +362,6 @@ init();
 
     private void buttonGradient1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGradient1ActionPerformed
         // TODO add your handling code here:
-        System.out.println("hello");
     }//GEN-LAST:event_buttonGradient1ActionPerformed
 
 
