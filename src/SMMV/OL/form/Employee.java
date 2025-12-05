@@ -679,6 +679,7 @@ public class Employee extends javax.swing.JPanel {
                 model.addRow(employeeVector);
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }//GEN-LAST:event_search_fieldKeyPressed
 

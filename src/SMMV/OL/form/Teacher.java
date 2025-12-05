@@ -350,6 +350,11 @@ public class Teacher extends javax.swing.JPanel {
                 search_fieldActionPerformed(evt);
             }
         });
+        search_field.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                search_fieldKeyPressed(evt);
+            }
+        });
 
         jScrollPane1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -589,6 +594,34 @@ public class Teacher extends javax.swing.JPanel {
     private void search_fieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search_fieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_search_fieldActionPerformed
+
+    private void search_fieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_search_fieldKeyPressed
+        String search = search_field.getText();
+        
+        try {
+            ResultSet rs = connection_ol.search("SELECT * FROM `teacher` "
+                    + "INNER JOIN `gender` ON `teacher`.`gender_gender_id`=`gender`.`gender_id` "
+                    + "INNER JOIN `status` ON `teacher`.`status_status_id`=`status`.`status_id` "
+                    + "WHERE `first_name`  LIKE '" + search + "%' OR `last_name` LIKE '" + search + "%'");
+
+            DefaultTableModel model = (DefaultTableModel) teacher_table.getModel();
+            model.setRowCount(0);
+            
+            while (rs.next()) {
+                Vector employeeVector = new Vector();
+                employeeVector.add(rs.getString("teacher_id"));
+                employeeVector.add(rs.getString("first_name"));
+                employeeVector.add(rs.getString("last_name"));
+                employeeVector.add(rs.getString("email"));
+                employeeVector.add(rs.getString("mobile"));
+                employeeVector.add(rs.getString("gender.name"));
+                employeeVector.add(rs.getString("status.status"));
+
+                model.addRow(employeeVector);
+            }
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_search_fieldKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
