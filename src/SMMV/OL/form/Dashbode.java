@@ -10,12 +10,12 @@ import java.awt.Color;
  *
  * @author user
  */
-public class form extends javax.swing.JPanel {
+public class Dashbode extends javax.swing.JPanel {
 
     /**
      * Creates new form form
      */
-    public form(int index) {
+    public Dashbode(int index) {
         initComponents();
         setOpaque(false);
         jLabel1.setText("Form "+index);

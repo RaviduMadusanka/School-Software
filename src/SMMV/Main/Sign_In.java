@@ -12,6 +12,7 @@ import SMMV.Validation.Validation;
 import com.formdev.flatlaf.FlatClientProperties;
 import com.formdev.flatlaf.demo.FlatLafDemo;
 import com.formdev.flatlaf.intellijthemes.FlatNordIJTheme;
+import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatNightOwlContrastIJTheme;
 import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatNightOwlIJTheme;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import com.formdev.flatlaf.themes.FlatMacLightLaf;
@@ -38,7 +39,6 @@ public class Sign_In extends javax.swing.JFrame {
         initComponents();
         this.setBackground(new Color(0, 0, 0, 0));
         init();
-        loaduser_type();
     }
 
     private void init() {
@@ -53,27 +53,6 @@ public class Sign_In extends javax.swing.JFrame {
         password_field.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter Your Password");
 
         Notifications.getInstance().setJFrame(this);
-    }
-
-    private void loaduser_type() {
-
-        try {
-
-            Vector<String> vector = new Vector<>();
-            vector.add("SELECT USER TYPE");
-
-            ResultSet user_type = connection_ol.search("SELECT * FROM `user_type`");
-
-            while (user_type.next()) {
-                vector.add(user_type.getString("type"));
-            }
-
-            user_type_combo.setModel(new DefaultComboBoxModel<>(vector));
-        } catch (SQLException e) {
-
-            throw new RuntimeException(e);
-        }
-
     }
 
     /**
@@ -95,10 +74,8 @@ public class Sign_In extends javax.swing.JFrame {
         buttonGradient1 = new SMMV.Component.ButtonGradient();
         buttonGradient2 = new SMMV.Component.ButtonGradient();
         jSeparator1 = new javax.swing.JSeparator();
-        student_type_combo = new javax.swing.JComboBox<>();
         email_field = new SMMV.Component.Rount_textfieald();
         password_field = new SMMV.Component.Rount_textfieald_password();
-        user_type_combo = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -140,7 +117,7 @@ public class Sign_In extends javax.swing.JFrame {
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(70, Short.MAX_VALUE))
         );
 
         jLabel4.setBackground(new java.awt.Color(0, 0, 204));
@@ -171,52 +148,41 @@ public class Sign_In extends javax.swing.JFrame {
 
         jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
 
-        student_type_combo.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        student_type_combo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Student Type", "Primary Student ", "O/L Student", "A/L Student" }));
-
         email_field.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
 
         password_field.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-
-        user_type_combo.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
 
         javax.swing.GroupLayout roundPanelElement3Layout = new javax.swing.GroupLayout(roundPanelElement3);
         roundPanelElement3.setLayout(roundPanelElement3Layout);
         roundPanelElement3Layout.setHorizontalGroup(
             roundPanelElement3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(roundPanelElement3Layout.createSequentialGroup()
-                .addGap(60, 60, 60)
-                .addGroup(roundPanelElement3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, roundPanelElement3Layout.createSequentialGroup()
+                .addGap(64, 64, 64)
+                .addGroup(roundPanelElement3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(email_field, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(password_field, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(student_type_combo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(user_type_combo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(buttonGradient1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(buttonGradient2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jSeparator1)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE))
-                .addGap(60, 60, 60))
+                .addGap(56, 56, 56))
         );
         roundPanelElement3Layout.setVerticalGroup(
             roundPanelElement3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(roundPanelElement3Layout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(email_field, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(80, 80, 80)
+                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
+                .addGap(1, 1, 1)
+                .addComponent(jSeparator1)
+                .addGap(18, 18, 18)
+                .addComponent(email_field, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
                 .addGap(15, 15, 15)
-                .addComponent(password_field, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15)
-                .addComponent(student_type_combo, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15)
-                .addComponent(user_type_combo, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21)
-                .addComponent(buttonGradient1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(password_field, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE)
+                .addGap(37, 37, 37)
+                .addComponent(buttonGradient1, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(buttonGradient2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40))
+                .addComponent(buttonGradient2, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
+                .addGap(105, 105, 105))
         );
 
         javax.swing.GroupLayout roundPanelElement1Layout = new javax.swing.GroupLayout(roundPanelElement1);
@@ -263,11 +229,8 @@ public class Sign_In extends javax.swing.JFrame {
 
         String email = email_field.getText();
         String password = String.valueOf(password_field.getPassword());
-        String student_type = String.valueOf(student_type_combo.getSelectedItem());
-        String user_type = String.valueOf(user_type_combo.getSelectedItem());
 
         if (email.isEmpty()) {
-//            Notifications.getInstance().show(Notifications.Type.WARNING,Notifications.Location.TOP_LEFT, "Please Enter Your Email Address");
             JOptionPane.showMessageDialog(this, "Please Enter Your Email Address", "Warning", JOptionPane.WARNING_MESSAGE);
         } else if (!email.matches(Validation.EMAIL_VALIDATION.validate())) {
             JOptionPane.showMessageDialog(this, "Your Email Address Is Invalide", "Warning", JOptionPane.WARNING_MESSAGE);
@@ -275,11 +238,7 @@ public class Sign_In extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Please Enter Your Password", "Warning", JOptionPane.WARNING_MESSAGE);
         } else if (!password.matches(Validation.PASSWORD_VALIDATION.validate())) {
             JOptionPane.showMessageDialog(this, "Invalid Your Password", "Warning", JOptionPane.WARNING_MESSAGE);
-        } else if (student_type.equals("Select Student Type")) {
-            JOptionPane.showMessageDialog(this, "Please Select Student Type", "Warning", JOptionPane.WARNING_MESSAGE);
-        } else if (user_type.equals("SELECT USER TYPE")) {
-            JOptionPane.showMessageDialog(this, "Please Select User Type", "Warning", JOptionPane.WARNING_MESSAGE);
-        } else {
+        }else {
 
             try {
 
@@ -297,7 +256,7 @@ public class Sign_In extends javax.swing.JFrame {
                     if (status.equals(Status.ACTIVE.name())) {
                         if (usertype.equals(User_type.PRINCIPALE.name())) {
 
-                            String user_name = UserLoging.getString("user_name");
+                            String user_name = UserLoging.getString("fast_name")+" "+UserLoging.getString("last_name");
                             String user_email = UserLoging.getString("email");
                             String mobile = UserLoging.getString("mobile");
                             String gender = UserLoging.getString("gender.name");
@@ -309,11 +268,15 @@ public class Sign_In extends javax.swing.JFrame {
                             Sign_In.details.setGender(gender);
                             Sign_In.details.setUser_type(usertype);
                             Sign_In.details.setUser_id(user_id);
+                            
+                            
+                            new Dashboard_ol().setVisible(true);
+                            this.dispose();
 
                         } else if (usertype.equals(User_type.WISE_PRINCIPALE.name())) {
 
 
-                            String user_name = UserLoging.getString("user_name");
+                            String user_name = UserLoging.getString("fast_name")+" "+UserLoging.getString("last_name");
                             String user_email = UserLoging.getString("email");
                             String mobile = UserLoging.getString("mobile");
                             String gender = UserLoging.getString("gender.name");
@@ -325,10 +288,13 @@ public class Sign_In extends javax.swing.JFrame {
                             Sign_In.details.setGender(gender);
                             Sign_In.details.setUser_type(usertype);
                             Sign_In.details.setUser_id(user_id);
+                            
+                            new Dashboard_ol().setVisible(true);
+                            this.dispose();
 
                         } else if (usertype.equals(User_type.IT_SECTION.name())) {
 
-                            String user_name = UserLoging.getString("user_name");
+                            String user_name = UserLoging.getString("fast_name")+" "+UserLoging.getString("last_name");
                             String user_email = UserLoging.getString("email");
                             String mobile = UserLoging.getString("mobile");
                             String gender = UserLoging.getString("gender.name");
@@ -341,7 +307,8 @@ public class Sign_In extends javax.swing.JFrame {
                             Sign_In.details.setUser_type(usertype);
                             Sign_In.details.setUser_id(user_id);
                             
-                            
+                            new Dashboard_ol().setVisible(true);
+                            this.dispose();
 
                         }
 
@@ -387,7 +354,7 @@ public class Sign_In extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        FlatMacLightLaf.setup();
+        FlatNightOwlContrastIJTheme.setup();
 //        FlatMacDarkLaf.setup();
 
         /* Create and display the form */
@@ -411,7 +378,5 @@ public class Sign_In extends javax.swing.JFrame {
     private SMMV.Component.roundPanelElement roundPanelElement1;
     private SMMV.Component.roundPanelElement roundPanelElement2;
     private SMMV.Component.roundPanelElement roundPanelElement3;
-    private javax.swing.JComboBox<String> student_type_combo;
-    private javax.swing.JComboBox<String> user_type_combo;
     // End of variables declaration//GEN-END:variables
 }
