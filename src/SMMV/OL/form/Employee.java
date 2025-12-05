@@ -35,6 +35,7 @@ public class Employee extends javax.swing.JPanel {
         initComponents();
         setOpaque(false);
         inti();
+        System.out.println("hello");
     }
 
     private void inti() {
@@ -42,7 +43,7 @@ public class Employee extends javax.swing.JPanel {
         email_field.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter Email Address");
         mobile_field.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter Mobile");
         password_filed.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter Password");
-        search_field.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Search Employee");
+        search_field.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Search Employee First Name or Last Name");
         JTableHeader tableHeader = employee_table.getTableHeader();
         tableHeader.setBackground(new Color(0, 0, 255));
         tableHeader.setForeground(Color.WHITE);
