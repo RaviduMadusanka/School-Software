@@ -42,12 +42,12 @@ public class Side_1 extends javax.swing.JPanel {
         addMenu(new ImageIcon(getClass().getResource("/SMMV/OL/img/teacher.png")), "Manage Teacher", 2);
         addMenu(new ImageIcon(getClass().getResource("/SMMV/OL/img/student.png")), "Manage Student", 3);
         addMenu(new ImageIcon(getClass().getResource("/SMMV/OL/img/subject.png")), "Manage Subject & Class", 4);
-        addMenu(new ImageIcon(getClass().getResource("/SMMV/OL/img/subject.png")), "Manage Sport & Grade", 5);
-        addMenu(new ImageIcon(getClass().getResource("/SMMV/OL/img/subject.png")), "Subject & Section For Teacher", 6);
-        addMenu(new ImageIcon(getClass().getResource("/SMMV/OL/img/subject.png")), "Student for sport", 7);
-        addMenu(new ImageIcon(getClass().getResource("/SMMV/OL/img/subject.png")), "Sport time table", 8);
-        addMenu(new ImageIcon(getClass().getResource("/SMMV/OL/img/subject.png")), "Manage Teacher Time Table", 9);
-        addMenu(new ImageIcon(getClass().getResource("/SMMV/OL/img/subject.png")), "Manage Class Time Table", 10);
+        addMenu(new ImageIcon(getClass().getResource("/SMMV/OL/img/sport.png")), "Manage Sport & Grade", 5);
+        addMenu(new ImageIcon(getClass().getResource("/SMMV/OL/img/teacher_1.png")), "Subject & Section For Teacher", 6);
+        addMenu(new ImageIcon(getClass().getResource("/SMMV/OL/img/sport.png")), "Student for sport", 7);
+        addMenu(new ImageIcon(getClass().getResource("/SMMV/OL/img/sport.png")), "Sport time table", 8);
+        addMenu(new ImageIcon(getClass().getResource("/SMMV/OL/img/time_table.png")), "Manage Teacher Time Table", 9);
+        addMenu(new ImageIcon(getClass().getResource("/SMMV/OL/img/time_table.png")), "Manage Class Time Table", 10);
         addEmpty();
         addMenu(new ImageIcon(getClass().getResource("/SMMV/OL/img/logout.png")), "Logout", 14);
     }
