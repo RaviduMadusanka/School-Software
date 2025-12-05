@@ -345,6 +345,11 @@ public class Teacher extends javax.swing.JPanel {
         jLabel12.setText("Search Teacher");
 
         search_field.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        search_field.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                search_fieldActionPerformed(evt);
+            }
+        });
 
         jScrollPane1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -580,6 +585,10 @@ public class Teacher extends javax.swing.JPanel {
 
         }
     }//GEN-LAST:event_buttonGradient2ActionPerformed
+
+    private void search_fieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_search_fieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_search_fieldActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
