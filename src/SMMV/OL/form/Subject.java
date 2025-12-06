@@ -21,6 +21,7 @@ import javax.swing.table.JTableHeader;
 public class Subject extends javax.swing.JPanel {
 
     String subID = "";
+    String classID = "";
 
     /**
      * Creates new form Subject
@@ -31,11 +32,10 @@ public class Subject extends javax.swing.JPanel {
     }
 
     private void inti() {
-        
+
         clear();
-        
+
         subjectField.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter Subject");
-        classField1.putClientProperty(FlatClientProperties.PLACEHOLDER_TEXT, "Enter Class");
         JTableHeader tableHeader = subjectTable.getTableHeader();
         JTableHeader tableHeader2 = class_table.getTableHeader();
         tableHeader.setBackground(new Color(0, 0, 255));
@@ -46,7 +46,7 @@ public class Subject extends javax.swing.JPanel {
         buttonGradient2.setEnabled(false);
         buttonGradient3.setEnabled(false);
         buttonGradient6.setEnabled(false);
-        
+
         subID = "";
 
         try {
@@ -61,6 +61,27 @@ public class Subject extends javax.swing.JPanel {
                 supplierVector.add(rs.getString("subject_id"));
                 supplierVector.add(rs.getString("subject_name"));
                 supplierVector.add(rs.getString("subject_type.subject_type"));
+
+                model.addRow(supplierVector);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+
+            ResultSet rs = connection_ol.search("SELECT * FROM `class_has_grade` INNER JOIN `class` ON `class_has_grade`.`class_class_id` = `class`.`class_id` "
+                    + "INNER JOIN `grade` ON `class_has_grade`.`grade_grade_id` = `grade`.`grade_id`");
+
+            DefaultTableModel model = (DefaultTableModel) class_table.getModel();
+            model.setRowCount(0);
+
+            while (rs.next()) {
+                Vector supplierVector = new Vector();
+                supplierVector.add(rs.getString("class_has_grade_id"));
+                supplierVector.add(rs.getString("grade.grade"));
+                supplierVector.add(rs.getString("class.class_name"));
 
                 model.addRow(supplierVector);
             }
@@ -85,18 +106,51 @@ public class Subject extends javax.swing.JPanel {
             e.printStackTrace();
         }
 
+        try {
+            Vector user_typeVector = new Vector();
+            user_typeVector.add("Select Grade...");
+
+            ResultSet subRS = connection_ol.search("SELECT * FROM `grade`");
+
+            while (subRS.next()) {
+                user_typeVector.add(subRS.getString("grade"));
+            }
+
+            jComboBox1.setModel(new DefaultComboBoxModel<>(user_typeVector));
+
+        } catch (java.sql.SQLException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            Vector user_typeVector = new Vector();
+            user_typeVector.add("Select Class...");
+
+            ResultSet subRS = connection_ol.search("SELECT * FROM `class`");
+
+            while (subRS.next()) {
+                user_typeVector.add(subRS.getString("class_name"));
+            }
+
+            jComboBox3.setModel(new DefaultComboBoxModel<>(user_typeVector));
+
+        } catch (java.sql.SQLException e) {
+            e.printStackTrace();
+        }
+
     }
-    
-    public void clear(){
-    
+
+    public void clear() {
+
         subjectField.setText("Enter Subject");
-        classField1.setText("Enter Class");
-        
+
         jComboBox2.setSelectedIndex(0);
         jComboBox1.setSelectedIndex(0);
-        
+        jComboBox3.setSelectedIndex(0);
+
         buttonGradient1.setEnabled(true);
-        
+        buttonGradient4.setEnabled(true);
+
     }
 
     /**
@@ -126,13 +180,13 @@ public class Subject extends javax.swing.JPanel {
         background5 = new SMMV.Component.Background();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        classField1 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         buttonGradient4 = new SMMV.Component.ButtonGradient();
         buttonGradient6 = new SMMV.Component.ButtonGradient();
         jScrollPane1 = new javax.swing.JScrollPane();
         class_table = new javax.swing.JTable();
+        jComboBox3 = new javax.swing.JComboBox<>();
 
         setBackground(new java.awt.Color(0, 0, 0));
 
@@ -313,9 +367,7 @@ public class Subject extends javax.swing.JPanel {
         );
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel6.setText("Enter Class Name");
-
-        classField1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel6.setText("Select Class");
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel7.setText("Select Grade");
@@ -327,11 +379,21 @@ public class Subject extends javax.swing.JPanel {
         buttonGradient4.setColor1(new java.awt.Color(0, 0, 153));
         buttonGradient4.setColor2(new java.awt.Color(139, 139, 252));
         buttonGradient4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        buttonGradient4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonGradient4ActionPerformed(evt);
+            }
+        });
 
         buttonGradient6.setText("Update Class");
         buttonGradient6.setColor1(new java.awt.Color(0, 0, 153));
         buttonGradient6.setColor2(new java.awt.Color(139, 139, 252));
         buttonGradient6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        buttonGradient6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonGradient6ActionPerformed(evt);
+            }
+        });
 
         class_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -341,7 +403,7 @@ public class Subject extends javax.swing.JPanel {
                 {null, null, null}
             },
             new String [] {
-                "Class Number", "Class Name", "Grade"
+                "Class Number", "Grade", "Class Name"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -352,12 +414,20 @@ public class Subject extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        class_table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                class_tableMousePressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(class_table);
         if (class_table.getColumnModel().getColumnCount() > 0) {
             class_table.getColumnModel().getColumn(0).setResizable(false);
             class_table.getColumnModel().getColumn(1).setResizable(false);
             class_table.getColumnModel().getColumn(2).setResizable(false);
         }
+
+        jComboBox3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout background2Layout = new javax.swing.GroupLayout(background2);
         background2.setLayout(background2Layout);
@@ -366,7 +436,7 @@ public class Subject extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, background2Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addGroup(background2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, background2Layout.createSequentialGroup()
                         .addComponent(background5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -375,12 +445,12 @@ public class Subject extends javax.swing.JPanel {
                     .addGroup(background2Layout.createSequentialGroup()
                         .addGroup(background2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(buttonGradient4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(classField1, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
+                            .addComponent(jComboBox3, javax.swing.GroupLayout.Alignment.LEADING, 0, 215, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(background2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.LEADING, 0, 236, Short.MAX_VALUE)
                             .addComponent(buttonGradient6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(15, 15, 15))
         );
@@ -396,9 +466,9 @@ public class Subject extends javax.swing.JPanel {
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(background2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jComboBox1)
-                    .addComponent(classField1, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE))
+                .addGroup(background2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(background2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buttonGradient4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -495,7 +565,9 @@ public class Subject extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Please Select Subject Name", "Warning", JOptionPane.WARNING_MESSAGE);
             } else {
 
-                connection_ol.iud("UPDATE `subject` SET `subject_name` = '" + subName + "' , `subject_type_id` = '" + typeID + "' WHERE `subject_id` = '" + subID + "'");
+                connection_ol.iud("UPDATE `subject` SET `subject_name` = '" + subName + "' , `subject_type_id` = "
+                        + "(SELECT `id` FROM `subject_type` WHERE `subject_type` = '" + String.valueOf(jComboBox2.getSelectedItem()) + "')"
+                        + " WHERE `subject_id` = '" + subID + "'");
 
                 inti();
 
@@ -518,6 +590,92 @@ public class Subject extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_buttonGradient3ActionPerformed
 
+    private void buttonGradient4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGradient4ActionPerformed
+        int calss = jComboBox3.getSelectedIndex();
+        int grade = jComboBox1.getSelectedIndex();
+
+        if (calss == 0) {
+            JOptionPane.showMessageDialog(this, "Please Select Class", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (grade == 0) {
+            JOptionPane.showMessageDialog(this, "Please Select Grade", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else {
+
+            try {
+
+                ResultSet chackRs = connection_ol.search("SELECT * FROM `class_has_grade` WHERE `class_class_id` = "
+                        + "(SELECT `class_id` FROM `class` WHERE `class_name` = '" + String.valueOf(jComboBox3.getSelectedItem()) + "') "
+                        + "AND `grade_grade_id` = (SELECT `grade_id` FROM `grade` WHERE `grade` = '" + String.valueOf(jComboBox1.getSelectedItem()) + "')");
+
+                if (!chackRs.next()) {
+
+                    connection_ol.iud("INSERT INTO `class_has_grade` (`class_class_id`,`grade_grade_id`) "
+                            + "VALUES ((SELECT `class_id` FROM `class` WHERE `class_name` = '" + String.valueOf(jComboBox3.getSelectedItem()) + "'),"
+                            + "(SELECT `grade_id` FROM `grade` WHERE `grade` = '" + String.valueOf(jComboBox1.getSelectedItem()) + "'))");
+
+                    inti();
+
+                } else {
+                    JOptionPane.showMessageDialog(this, "This Class already accessed", "Warning", JOptionPane.WARNING_MESSAGE);
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+    }//GEN-LAST:event_buttonGradient4ActionPerformed
+
+    private void class_tableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_class_tableMousePressed
+        if (evt.getClickCount() == 2) {
+
+            buttonGradient6.setEnabled(true);
+            buttonGradient4.setEnabled(false);
+
+            int row = class_table.getSelectedRow();
+
+            classID = String.valueOf(class_table.getValueAt(row, 0));
+
+            jComboBox3.setSelectedItem(String.valueOf(class_table.getValueAt(row, 2)));
+            jComboBox1.setSelectedItem(String.valueOf(class_table.getValueAt(row, 1)));
+        }
+    }//GEN-LAST:event_class_tableMousePressed
+
+    private void buttonGradient6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGradient6ActionPerformed
+        int calss = jComboBox3.getSelectedIndex();
+        int grade = jComboBox1.getSelectedIndex();
+
+        if (calss == 0) {
+            JOptionPane.showMessageDialog(this, "Please Select Class", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (grade == 0) {
+            JOptionPane.showMessageDialog(this, "Please Select Grade", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else {
+
+            try {
+
+                ResultSet chackRs = connection_ol.search("SELECT * FROM `class_has_grade` WHERE `class_class_id` = "
+                        + "(SELECT `class_id` FROM `class` WHERE `class_name` = '" + String.valueOf(jComboBox3.getSelectedItem()) + "') "
+                        + "AND `grade_grade_id` = (SELECT `grade_id` FROM `grade` WHERE `grade` = '" + String.valueOf(jComboBox1.getSelectedItem()) + "')");
+
+                if (!chackRs.next()) {
+
+                    connection_ol.iud("UPDATE `class_has_grade` SET "
+                            + "`class_class_id` = (SELECT `class_id` FROM `class` WHERE `class_name` = '" + String.valueOf(jComboBox3.getSelectedItem()) + "') , "
+                            + "`grade_grade_id` = (SELECT `grade_id` FROM `grade` WHERE `grade` = '" + String.valueOf(jComboBox1.getSelectedItem()) + "') "
+                            + "WHERE `class_has_grade_id` = '" + classID + "'");
+
+                    inti();
+
+                } else {
+                    JOptionPane.showMessageDialog(this, "This Class already accessed", "Warning", JOptionPane.WARNING_MESSAGE);
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+    }//GEN-LAST:event_buttonGradient6ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private SMMV.Component.Background background1;
@@ -529,10 +687,10 @@ public class Subject extends javax.swing.JPanel {
     private SMMV.Component.ButtonGradient buttonGradient3;
     private SMMV.Component.ButtonGradient buttonGradient4;
     private SMMV.Component.ButtonGradient buttonGradient6;
-    private javax.swing.JTextField classField1;
     private javax.swing.JTable class_table;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
