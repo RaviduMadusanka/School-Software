@@ -862,7 +862,7 @@ public class Student extends javax.swing.JPanel {
 
     private void buttonGradient5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGradient5ActionPerformed
         // TODO add your handling code here:
-        System.out.println("Hasintha");
+        
     }//GEN-LAST:event_buttonGradient5ActionPerformed
 
 
