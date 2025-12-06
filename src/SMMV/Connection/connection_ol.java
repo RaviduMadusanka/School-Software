@@ -42,6 +42,7 @@ public class connection_ol {
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
+        
     }
 
     public static ResultSet search(String query) throws SQLException {
