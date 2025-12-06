@@ -4,7 +4,16 @@
  */
 package SMMV.OL.form;
 
+import SMMV.Connection.connection_ol;
+import SMMV.OL.model.OtherSubject;
+import SMMV.Validation.Validation;
 import java.awt.Color;
+import java.sql.ResultSet;
+import java.util.HashMap;
+import java.util.Vector;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
 /**
@@ -13,15 +22,98 @@ import javax.swing.table.JTableHeader;
  */
 public class Student extends javax.swing.JPanel {
 
+    HashMap<String, String> grade_map = new HashMap<>();
+    HashMap<String, String> class_map = new HashMap<>();
+    HashMap<String, String> other_subject_map = new HashMap<>();
+    HashMap<String, OtherSubject> otherSubjectHashMap = new HashMap<>();
+
     /**
      * Creates new form Student
      */
     public Student() {
         initComponents();
         setOpaque(false);
-                JTableHeader tableHeader = student_table.getTableHeader();
+        JTableHeader tableHeader = student_table.getTableHeader();
         tableHeader.setBackground(new Color(0, 0, 255));
         tableHeader.setForeground(Color.WHITE);
+        loadGrade();
+        loadClass();
+        loadOtherSubject();
+    }
+
+    private void loadGrade() {
+        try {
+            Vector gradeVector = new Vector();
+            gradeVector.add("Select Grade");
+
+            ResultSet gradeRs = connection_ol.search("SELECT * FROM `grade`");
+
+            while (gradeRs.next()) {
+
+                gradeVector.add(gradeRs.getString("grade"));
+                grade_map.put(gradeRs.getString("grade"), gradeRs.getString("grade_id"));
+            }
+
+            gradeCombo.setModel(new DefaultComboBoxModel<>(gradeVector));
+        } catch (java.sql.SQLException e) {
+//                        SignIn.logger.warning(e.getMessage());
+            e.printStackTrace();
+        }
+
+    }
+
+    private void loadClass() {
+        try {
+            Vector classVector = new Vector();
+            classVector.add("Select Class");
+
+            ResultSet classRs = connection_ol.search("SELECT * FROM `class`");
+
+            while (classRs.next()) {
+
+                classVector.add(classRs.getString("class_name"));
+                class_map.put(classRs.getString("class_name"), classRs.getString("class_id"));
+            }
+
+            classCombo.setModel(new DefaultComboBoxModel<>(classVector));
+        } catch (java.sql.SQLException e) {
+//                        SignIn.logger.warning(e.getMessage());
+            System.out.println(e);
+        }
+
+    }
+
+    private void subjectAdd(String subjectName, String indexNumber) {
+        try {
+            ResultSet subjectIdRs = connection_ol.search("SELECT * FROM `subject` WHERE `subject_name`='" + subjectName + "'");
+            if (subjectIdRs.next()) {
+                String subjectId = subjectIdRs.getString("subject_id");
+                connection_ol.iud("INSERT INTO `student_has_subject` (`subject_subject_id`,`student_student_id`) "
+                        + "VALUES ('" + subjectId + "','" + indexNumber + "')");
+            }
+        } catch (java.sql.SQLException | NullPointerException e) {
+            System.out.println(e);
+        }
+    }
+
+    private void loadOtherSubject() {
+        try {
+            Vector classVector = new Vector();
+            classVector.add("Select Other Subject");
+
+            ResultSet otherSubjectRs = connection_ol.search("SELECT * FROM `subject` WHERE `subject_type_id`='2'");
+
+            while (otherSubjectRs.next()) {
+
+                classVector.add(otherSubjectRs.getString("subject_name"));
+                other_subject_map.put(otherSubjectRs.getString("subject_name"), otherSubjectRs.getString("subject_id"));
+            }
+
+            other_subject_combo.setModel(new DefaultComboBoxModel<>(classVector));
+        } catch (java.sql.SQLException e) {
+//                        SignIn.logger.warning(e.getMessage());
+            System.out.println(e);
+        }
     }
 
     /**
@@ -48,51 +140,51 @@ public class Student extends javax.swing.JPanel {
         jLabel7 = new javax.swing.JLabel();
         fname_field = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        gradeCombo = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        classCombo = new javax.swing.JComboBox<>();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel10 = new javax.swing.JLabel();
         background3 = new SMMV.Component.Background();
         Set_Panel = new SMMV.Component.Background();
         jLabel20 = new javax.swing.JLabel();
-        jComboBox4 = new javax.swing.JComboBox<>();
+        other_subject_combo = new javax.swing.JComboBox<>();
         buttonGradient4 = new SMMV.Component.ButtonGradient();
         buttonGradient5 = new SMMV.Component.ButtonGradient();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        other_subject_table = new javax.swing.JTable();
         jLabel18 = new javax.swing.JLabel();
         email_field1 = new javax.swing.JTextField();
         background5 = new SMMV.Component.Background();
         jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        jCheckBox3 = new javax.swing.JCheckBox();
-        jCheckBox4 = new javax.swing.JCheckBox();
-        jCheckBox5 = new javax.swing.JCheckBox();
-        jCheckBox6 = new javax.swing.JCheckBox();
-        jCheckBox7 = new javax.swing.JCheckBox();
-        jCheckBox8 = new javax.swing.JCheckBox();
-        jCheckBox9 = new javax.swing.JCheckBox();
-        jCheckBox10 = new javax.swing.JCheckBox();
-        jCheckBox11 = new javax.swing.JCheckBox();
-        jCheckBox12 = new javax.swing.JCheckBox();
-        jCheckBox13 = new javax.swing.JCheckBox();
-        jCheckBox14 = new javax.swing.JCheckBox();
-        jCheckBox15 = new javax.swing.JCheckBox();
-        jCheckBox16 = new javax.swing.JCheckBox();
-        jCheckBox17 = new javax.swing.JCheckBox();
+        sinhala = new javax.swing.JCheckBox();
+        english = new javax.swing.JCheckBox();
+        maths = new javax.swing.JCheckBox();
+        civic = new javax.swing.JCheckBox();
+        science = new javax.swing.JCheckBox();
+        buddhist = new javax.swing.JCheckBox();
+        art = new javax.swing.JCheckBox();
+        dance = new javax.swing.JCheckBox();
+        ict = new javax.swing.JCheckBox();
+        music = new javax.swing.JCheckBox();
+        drama = new javax.swing.JCheckBox();
+        history = new javax.swing.JCheckBox();
+        pts = new javax.swing.JCheckBox();
+        health = new javax.swing.JCheckBox();
+        tamil = new javax.swing.JCheckBox();
+        geography = new javax.swing.JCheckBox();
         jLabel11 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
-        fname_field1 = new javax.swing.JTextField();
+        mother_name_feild = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
-        fname_field2 = new javax.swing.JTextField();
-        fname_field3 = new javax.swing.JTextField();
+        father_name_field = new javax.swing.JTextField();
+        guardian_name_field = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        fname_field4 = new javax.swing.JTextField();
+        mobile_field = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
-        fname_field5 = new javax.swing.JTextField();
+        land_number_field = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel17 = new javax.swing.JLabel();
@@ -101,9 +193,9 @@ public class Student extends javax.swing.JPanel {
         buttonGradient1 = new SMMV.Component.ButtonGradient();
         buttonGradient2 = new SMMV.Component.ButtonGradient();
         buttonGradient3 = new SMMV.Component.ButtonGradient();
-        fname_field6 = new javax.swing.JTextField();
+        line1_field = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
-        fname_field7 = new javax.swing.JTextField();
+        line2_field = new javax.swing.JTextField();
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
         jSeparator4 = new javax.swing.JSeparator();
@@ -127,7 +219,7 @@ public class Student extends javax.swing.JPanel {
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Student First Name");
+        jLabel4.setText("Student Last Name");
 
         lname_field.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
@@ -159,15 +251,15 @@ public class Student extends javax.swing.JPanel {
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Grade");
 
-        jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        gradeCombo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        gradeCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Class ");
 
-        jComboBox2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        classCombo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        classCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
@@ -178,13 +270,23 @@ public class Student extends javax.swing.JPanel {
         jLabel20.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel20.setText("Select Your Other Subject");
 
-        jComboBox4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        other_subject_combo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        other_subject_combo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        other_subject_combo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                other_subject_comboActionPerformed(evt);
+            }
+        });
 
         buttonGradient4.setText("Add Subject");
         buttonGradient4.setColor1(new java.awt.Color(0, 0, 255));
         buttonGradient4.setColor2(new java.awt.Color(139, 139, 252));
         buttonGradient4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        buttonGradient4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonGradient4ActionPerformed(evt);
+            }
+        });
 
         buttonGradient5.setText("Delete Subject");
         buttonGradient5.setColor1(new java.awt.Color(0, 0, 255));
@@ -196,7 +298,7 @@ public class Student extends javax.swing.JPanel {
             }
         });
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        other_subject_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -204,7 +306,7 @@ public class Student extends javax.swing.JPanel {
                 "Subject Number", "Subject Name"
             }
         ));
-        jScrollPane3.setViewportView(jTable2);
+        jScrollPane3.setViewportView(other_subject_table);
 
         javax.swing.GroupLayout Set_PanelLayout = new javax.swing.GroupLayout(Set_Panel);
         Set_Panel.setLayout(Set_PanelLayout);
@@ -225,7 +327,7 @@ public class Student extends javax.swing.JPanel {
                     .addGroup(Set_PanelLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(Set_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(other_subject_combo, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(19, 19, 19))
         );
@@ -235,7 +337,7 @@ public class Student extends javax.swing.JPanel {
                 .addGap(10, 10, 10)
                 .addComponent(jLabel20)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(other_subject_combo, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(Set_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buttonGradient4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -271,53 +373,53 @@ public class Student extends javax.swing.JPanel {
         jCheckBox1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jCheckBox1.setText("Select All Subject");
 
-        jCheckBox2.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        jCheckBox2.setText("Sinhala");
+        sinhala.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        sinhala.setText("Sinhala");
 
-        jCheckBox3.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        jCheckBox3.setText("English");
+        english.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        english.setText("English");
 
-        jCheckBox4.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        jCheckBox4.setText("Mathematics");
+        maths.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        maths.setText("Mathematics");
 
-        jCheckBox5.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        jCheckBox5.setText("Civic");
+        civic.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        civic.setText("Civic");
 
-        jCheckBox6.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        jCheckBox6.setText("Science");
+        science.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        science.setText("Science");
 
-        jCheckBox7.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        jCheckBox7.setText("Buddhist");
+        buddhist.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        buddhist.setText("Buddhist");
 
-        jCheckBox8.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        jCheckBox8.setText("Art");
+        art.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        art.setText("Art");
 
-        jCheckBox9.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        jCheckBox9.setText("Dancing");
+        dance.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        dance.setText("Dancing");
 
-        jCheckBox10.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        jCheckBox10.setText("ICT");
+        ict.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        ict.setText("ICT");
 
-        jCheckBox11.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        jCheckBox11.setText("Music");
+        music.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        music.setText("Music");
 
-        jCheckBox12.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        jCheckBox12.setText("Drama");
+        drama.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        drama.setText("Drama");
 
-        jCheckBox13.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        jCheckBox13.setText("History");
+        history.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        history.setText("History");
 
-        jCheckBox14.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        jCheckBox14.setText("P.T.S");
+        pts.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        pts.setText("P.T.S");
 
-        jCheckBox15.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        jCheckBox15.setText("Health");
+        health.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        health.setText("Health");
 
-        jCheckBox16.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        jCheckBox16.setText("Tamil");
+        tamil.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        tamil.setText("Tamil");
 
-        jCheckBox17.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        jCheckBox17.setText("Geography");
+        geography.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        geography.setText("Geography");
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel11.setText("Select Aesthetic subject");
@@ -333,46 +435,46 @@ public class Student extends javax.swing.JPanel {
                         .addGroup(background5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jCheckBox1)
                             .addGroup(background5Layout.createSequentialGroup()
-                                .addComponent(jCheckBox10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(ict, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(219, 219, 219))
                             .addGroup(background5Layout.createSequentialGroup()
                                 .addGroup(background5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(background5Layout.createSequentialGroup()
-                                        .addComponent(jCheckBox6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(science, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addGap(1, 1, 1))
-                                    .addComponent(jCheckBox2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(sinhala, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(120, 120, 120)
                                 .addGroup(background5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(background5Layout.createSequentialGroup()
-                                        .addComponent(jCheckBox3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(english, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addGap(15, 15, 15))
                                     .addGroup(background5Layout.createSequentialGroup()
-                                        .addComponent(jCheckBox7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(buddhist, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addGap(8, 8, 8))
-                                    .addComponent(jCheckBox15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jCheckBox16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jCheckBox9)))
+                                    .addComponent(health, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(tamil, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(dance)))
                             .addGroup(background5Layout.createSequentialGroup()
-                                .addComponent(jCheckBox14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(pts, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(185, 185, 185))
-                            .addComponent(jCheckBox11))
+                            .addComponent(music))
                         .addGap(117, 117, 117)
                         .addGroup(background5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(background5Layout.createSequentialGroup()
-                                .addComponent(jCheckBox5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(civic, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(21, 21, 21))
                             .addGroup(background5Layout.createSequentialGroup()
-                                .addComponent(jCheckBox4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(maths, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(8, 8, 8))
                             .addGroup(background5Layout.createSequentialGroup()
-                                .addComponent(jCheckBox13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(history, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(21, 21, 21))
-                            .addComponent(jCheckBox17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jCheckBox12))
+                            .addComponent(geography, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(drama))
                         .addGap(26, 26, 26))
                     .addGroup(background5Layout.createSequentialGroup()
                         .addGroup(background5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCheckBox8, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(art, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
@@ -383,33 +485,33 @@ public class Student extends javax.swing.JPanel {
                 .addComponent(jCheckBox1)
                 .addGap(18, 18, 18)
                 .addGroup(background5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox2)
-                    .addComponent(jCheckBox3)
-                    .addComponent(jCheckBox4))
+                    .addComponent(sinhala)
+                    .addComponent(english)
+                    .addComponent(maths))
                 .addGap(18, 18, 18)
                 .addGroup(background5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox6)
-                    .addComponent(jCheckBox7)
-                    .addComponent(jCheckBox5))
+                    .addComponent(science)
+                    .addComponent(buddhist)
+                    .addComponent(civic))
                 .addGap(18, 18, 18)
                 .addGroup(background5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox10)
-                    .addComponent(jCheckBox15)
-                    .addComponent(jCheckBox13))
+                    .addComponent(ict)
+                    .addComponent(health)
+                    .addComponent(history))
                 .addGap(18, 18, 18)
                 .addGroup(background5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox14)
-                    .addComponent(jCheckBox16)
-                    .addComponent(jCheckBox17))
+                    .addComponent(pts)
+                    .addComponent(tamil)
+                    .addComponent(geography))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(background5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox9)
-                    .addComponent(jCheckBox11)
-                    .addComponent(jCheckBox12))
+                    .addComponent(dance)
+                    .addComponent(music)
+                    .addComponent(drama))
                 .addGap(18, 18, 18)
-                .addComponent(jCheckBox8)
+                .addComponent(art)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -439,7 +541,7 @@ public class Student extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(background2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(background2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jComboBox1, 0, 232, Short.MAX_VALUE)
+                                        .addComponent(gradeCombo, 0, 232, Short.MAX_VALUE)
                                         .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(fname_field, javax.swing.GroupLayout.Alignment.LEADING))
                                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -452,7 +554,7 @@ public class Student extends javax.swing.JPanel {
                                         .addGap(39, 39, 39)
                                         .addGroup(background2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                            .addComponent(classCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                     .addGroup(background2Layout.createSequentialGroup()
                                         .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(0, 0, Short.MAX_VALUE))
@@ -485,7 +587,7 @@ public class Student extends javax.swing.JPanel {
                     .addGroup(background2Layout.createSequentialGroup()
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(classCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(background2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(background2Layout.createSequentialGroup()
                         .addGap(20, 20, 20)
@@ -500,7 +602,7 @@ public class Student extends javax.swing.JPanel {
                                     .addComponent(female)))
                             .addGroup(background2Layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(gradeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(background2Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jLabel18)
@@ -538,15 +640,15 @@ public class Student extends javax.swing.JPanel {
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("Mother's Name");
 
-        fname_field1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        mother_name_feild.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(255, 255, 255));
         jLabel13.setText("Father's Name");
 
-        fname_field2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        father_name_field.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
-        fname_field3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        guardian_name_field.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
@@ -556,13 +658,13 @@ public class Student extends javax.swing.JPanel {
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
         jLabel15.setText("Mobile Number");
 
-        fname_field4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        mobile_field.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
         jLabel16.setText("Land Number");
 
-        fname_field5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        land_number_field.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setText("Parent's Details");
@@ -578,6 +680,11 @@ public class Student extends javax.swing.JPanel {
         buttonGradient1.setColor1(new java.awt.Color(0, 0, 255));
         buttonGradient1.setColor2(new java.awt.Color(139, 139, 252));
         buttonGradient1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        buttonGradient1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonGradient1ActionPerformed(evt);
+            }
+        });
 
         buttonGradient2.setText("Update Student");
         buttonGradient2.setColor1(new java.awt.Color(0, 0, 255));
@@ -589,13 +696,13 @@ public class Student extends javax.swing.JPanel {
         buttonGradient3.setColor2(new java.awt.Color(149, 149, 248));
         buttonGradient3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
-        fname_field6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        line1_field.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         jLabel21.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(255, 255, 255));
         jLabel21.setText("Enter Address Line 02");
 
-        fname_field7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        line2_field.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel22.setText("First enter your details.After You can admit new student.");
@@ -628,12 +735,12 @@ public class Student extends javax.swing.JPanel {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(fname_field1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(fname_field4, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(mother_name_feild, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(mobile_field, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(fname_field5, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(land_number_field, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(349, 349, 349))
                             .addGroup(jPanel2Layout.createSequentialGroup()
@@ -642,11 +749,11 @@ public class Student extends javax.swing.JPanel {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(fname_field2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(father_name_field, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(49, 49, 49)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(fname_field3, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(guardian_name_field, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -669,11 +776,11 @@ public class Student extends javax.swing.JPanel {
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 685, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(jPanel2Layout.createSequentialGroup()
-                                    .addComponent(fname_field6, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(line1_field, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(fname_field7, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(line2_field, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addComponent(jLabel26, javax.swing.GroupLayout.PREFERRED_SIZE, 685, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
@@ -692,22 +799,22 @@ public class Student extends javax.swing.JPanel {
                             .addComponent(jLabel13))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(fname_field3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(fname_field2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(guardian_name_field, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(father_name_field, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel12)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(fname_field1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(mother_name_feild, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel15)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(fname_field4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(mobile_field, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel16)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(fname_field5, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(land_number_field, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(31, 31, 31)
                 .addComponent(jLabel17)
                 .addGap(18, 18, 18)
@@ -718,8 +825,8 @@ public class Student extends javax.swing.JPanel {
                     .addComponent(jLabel21))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fname_field6, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fname_field7, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(line1_field, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(line2_field, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel24)
@@ -865,52 +972,256 @@ public class Student extends javax.swing.JPanel {
         System.out.println("Hasintha");
     }//GEN-LAST:event_buttonGradient5ActionPerformed
 
+    private void buttonGradient1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGradient1ActionPerformed
+
+        String parentId = "";
+
+        String index_number = enrollment_no_field.getText();
+        String first_name = fname_field.getText();
+        String last_name = lname_field.getText();
+        String class_id = String.valueOf(classCombo.getSelectedItem());
+        int genser = 0;
+
+        if (male.isSelected()) {
+            genser = 1;
+        }
+        if (female.isSelected()) {
+            genser = 2;
+        }
+        String grade = String.valueOf(gradeCombo.getSelectedItem());
+        String email = email_field1.getText();
+        String motherName = mother_name_feild.getText();
+        String fatherName = father_name_field.getText();
+        String guardianName = guardian_name_field.getText();
+        String mobileNumber = mobile_field.getText();
+        String landNumber = land_number_field.getText();
+        String line1 = line1_field.getText();
+        String line2 = line2_field.getText();
+
+        if (index_number.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Student Index Number", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (first_name.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Student First Name", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (last_name.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Student Last Name", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (class_id.equals("Select Class")) {
+            JOptionPane.showMessageDialog(this, "Please Select Student Class", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (!male.isSelected() && !female.isSelected()) {
+            JOptionPane.showMessageDialog(this, "Please Select Gender", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (grade.equals("Select Grade")) {
+            JOptionPane.showMessageDialog(this, "Please Select Student Grade", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (email.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Student Email", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (!email.matches(Validation.EMAIL_VALIDATION.validate())) {
+            JOptionPane.showMessageDialog(this, "Invalid Email Address", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (motherName.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Student's Mother Name", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (fatherName.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Student's Father Name", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (mobileNumber.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Perant's Mobile", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (!mobileNumber.matches(Validation.MOBILE_NUMBER_VALIDATION.validate())) {
+            JOptionPane.showMessageDialog(this, "Invalid Mobile Number", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (landNumber.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Land Number", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (!landNumber.matches(Validation.LAND_NUMBER_VALIDATION.validate())) {
+            JOptionPane.showMessageDialog(this, "Invalid Land Number", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (line1.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Address Line 01", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else if (line2.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please Enter Address Line 02", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else {
+
+            try {
+                ResultSet rs = connection_ol.search("SELECT * FROM `student` WHERE `email`='" + email + "' OR `student_id`='" + index_number + "'");
+
+                if (rs.next()) {
+                    JOptionPane.showMessageDialog(this, "Email Or Student Index Number Already Use!", "Warning", JOptionPane.WARNING_MESSAGE);
+                } else {
+
+                    ResultSet perentRs = connection_ol.search("SELECT * FROM `parent_details` WHERE `parent_mobile`='" + mobileNumber + "' OR `land_number`='" + landNumber + "'");
+
+                    if (perentRs.next()) {
+                        JOptionPane.showMessageDialog(this, "Parent Mobile Number or Land Number Already Use!", "Warning", JOptionPane.WARNING_MESSAGE);
+                    } else {
+
+                        connection_ol.iud("INSERT INTO `parent_details` (`mothser's_name`,`farther's_name`,`guardian's_name`,`parent_mobile`,`land_number`) "
+                                + "VALUES ('" + motherName + "','" + fatherName + "','" + guardianName + "','" + mobileNumber + "','" + landNumber + "')");
+
+                        ResultSet perentResult = connection_ol.search("SELECT * FROM `parent_details` WHERE `parent_mobile`='" + mobileNumber + "' AND `land_number`='" + landNumber + "'");
+
+                        if (perentResult.next()) {
+                            parentId = perentResult.getString("details_id");
+
+                            connection_ol.iud("INSERT INTO `student` (`student_id`,`first_name`,`last_name`,`email`,`mobile`,`status_status_id`,`gender_gender_id`,`parent_details_details_id`) "
+                                    + "VALUES ('" + index_number + "','" + first_name + "','" + last_name + "','" + email + "','" + mobileNumber + "','1','" + genser + "','" + parentId + "')");
+
+                            ResultSet classRs = connection_ol.search("SELECT * FROM `class_has_grade` "
+                                    + "WHERE `class_class_id`='" + class_map.get(class_id) + "' AND `grade_grade_id`='" + grade_map.get(grade) + "'");
+
+                            if (classRs.next()) {
+                                String class_grade_id = classRs.getString("class_has_grade_id");
+
+                                connection_ol.iud("INSERT INTO `class_has_grade_has_student` (`student_student_id`,`class_has_grade_class_has_grade_id`) "
+                                        + "VALUES ('" + index_number + "','" + class_grade_id + "')");
+
+                                if (!sinhala.isSelected() && english.isSelected() && maths.isSelected() && science.isSelected()
+                                        && buddhist.isSelected() && history.isSelected() | dance.isSelected() | drama.isSelected() | music.isSelected() | art.isSelected()) {
+
+                                    JOptionPane.showMessageDialog(this, "Please Select Important Subject!", "Warning", JOptionPane.WARNING_MESSAGE);
+                                } else {
+                                    //Subject Add
+                                    if (sinhala.isSelected()) {
+                                        subjectAdd(sinhala.getText(), index_number);
+                                    }
+                                    if (english.isSelected()) {
+                                        subjectAdd(english.getText(), index_number);
+                                    }
+                                    if (maths.isSelected()) {
+                                        subjectAdd(maths.getText(), index_number);
+                                    }
+                                    if (science.isSelected()) {
+                                        subjectAdd(science.getText(), index_number);
+                                    }
+                                    if (buddhist.isSelected()) {
+                                        subjectAdd(buddhist.getText(), index_number);
+                                    }
+                                    if (civic.isSelected()) {
+                                        subjectAdd(civic.getText(), index_number);
+                                    }
+                                    if (ict.isSelected()) {
+                                        subjectAdd(ict.getText(), index_number);
+                                    }
+                                    if (health.isSelected()) {
+                                        subjectAdd(health.getText(), index_number);
+                                    }
+                                    if (history.isSelected()) {
+                                        subjectAdd(history.getText(), index_number);
+                                    }
+                                    if (pts.isSelected()) {
+                                        subjectAdd(pts.getText(), index_number);
+                                    }
+                                    if (tamil.isSelected()) {
+                                        subjectAdd(tamil.getText(), index_number);
+                                    }
+                                    if (geography.isSelected()) {
+                                        subjectAdd(geography.getText(), index_number);
+                                    }
+                                    if (music.isSelected()) {
+                                        subjectAdd(music.getText(), index_number);
+                                    }
+                                    if (dance.isSelected()) {
+                                        subjectAdd(dance.getText(), index_number);
+                                    }
+                                    if (drama.isSelected()) {
+                                        subjectAdd(drama.getText(), index_number);
+                                    }
+                                    if (art.isSelected()) {
+                                        subjectAdd(art.getText(), index_number);
+                                    }
+
+                                    for (int i = 0; i < 3; i++) {
+                                        String otherSubjectId = String.valueOf(other_subject_table.getValueAt(i, 0));
+                                        connection_ol.iud("INSERT INTO `student_has_subject` (`subject_subject_id`,`student_student_id`) "
+                                                + "VALUES ('" + otherSubjectId + "','" + index_number + "')");
+                                    }
+
+                                    connection_ol.iud("INSERT INTO `address` (`line_1`,`line_2`,`student_student_id`) "
+                                            + "VALUES ('" + line1 + "','" + line2 + "','" + index_number + "')");
+
+                                    JOptionPane.showMessageDialog(this, "New Student Added Successfully", "Success", JOptionPane.OK_OPTION);
+
+                                }
+
+                            } else {
+                                //grade ekata classs tika insert karanawa 
+                                JOptionPane.showMessageDialog(this, "Please Update Grade For Class", "Warning", JOptionPane.WARNING_MESSAGE);
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(this, "Invalid Parent!", "Warning", JOptionPane.WARNING_MESSAGE);
+                        }
+
+                    }
+
+                }
+
+            } catch (java.sql.SQLException e) {
+                System.out.println(e);
+            }
+
+        }
+
+    }//GEN-LAST:event_buttonGradient1ActionPerformed
+
+    private void other_subject_comboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_other_subject_comboActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_other_subject_comboActionPerformed
+
+    private void buttonGradient4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonGradient4ActionPerformed
+
+        OtherSubject otherSubject = new OtherSubject();
+        otherSubject.setSubjectId(other_subject_map.get(other_subject_combo.getSelectedItem()));
+
+        try {
+            ResultSet rs = connection_ol.search("SELECT * FROM `subject` WHERE `subject_id`='" + other_subject_map.get(other_subject_combo.getSelectedItem()) + "'");
+
+            if (rs.next()) {
+                otherSubject.setSubjectName(rs.getString("subject_name"));
+                
+                otherSubjectHashMap.put(other_subject_map.get(other_subject_combo.getSelectedItem()), otherSubject);
+
+                DefaultTableModel model = (DefaultTableModel) other_subject_table.getModel();
+                model.setRowCount(0);
+                
+                for (OtherSubject other : otherSubjectHashMap.values()) {
+
+                    Vector subjectVector = new Vector<>();
+                    subjectVector.add(other.getSubjectId());
+                    subjectVector.add(other.getSubjectName());
+
+                    model.addRow(subjectVector);
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_buttonGradient4ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private SMMV.Component.Background Set_Panel;
+    private javax.swing.JCheckBox art;
     private SMMV.Component.Background background1;
     private SMMV.Component.Background background2;
     private SMMV.Component.Background background3;
     private SMMV.Component.Background background4;
     private SMMV.Component.Background background5;
     private SMMV.Component.Background background6;
+    private javax.swing.JCheckBox buddhist;
     private SMMV.Component.ButtonGradient buttonGradient1;
     private SMMV.Component.ButtonGradient buttonGradient2;
     private SMMV.Component.ButtonGradient buttonGradient3;
     private SMMV.Component.ButtonGradient buttonGradient4;
     private SMMV.Component.ButtonGradient buttonGradient5;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JCheckBox civic;
+    private javax.swing.JComboBox<String> classCombo;
+    private javax.swing.JCheckBox dance;
+    private javax.swing.JCheckBox drama;
     private javax.swing.JTextField email_field1;
+    private javax.swing.JCheckBox english;
     private javax.swing.JTextField enrollment_no_field;
+    private javax.swing.JTextField father_name_field;
     private javax.swing.JRadioButton female;
     private javax.swing.JTextField fname_field;
-    private javax.swing.JTextField fname_field1;
-    private javax.swing.JTextField fname_field2;
-    private javax.swing.JTextField fname_field3;
-    private javax.swing.JTextField fname_field4;
-    private javax.swing.JTextField fname_field5;
-    private javax.swing.JTextField fname_field6;
-    private javax.swing.JTextField fname_field7;
+    private javax.swing.JCheckBox geography;
+    private javax.swing.JComboBox<String> gradeCombo;
+    private javax.swing.JTextField guardian_name_field;
+    private javax.swing.JCheckBox health;
+    private javax.swing.JCheckBox history;
+    private javax.swing.JCheckBox ict;
     private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox10;
-    private javax.swing.JCheckBox jCheckBox11;
-    private javax.swing.JCheckBox jCheckBox12;
-    private javax.swing.JCheckBox jCheckBox13;
-    private javax.swing.JCheckBox jCheckBox14;
-    private javax.swing.JCheckBox jCheckBox15;
-    private javax.swing.JCheckBox jCheckBox16;
-    private javax.swing.JCheckBox jCheckBox17;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox3;
-    private javax.swing.JCheckBox jCheckBox4;
-    private javax.swing.JCheckBox jCheckBox5;
-    private javax.swing.JCheckBox jCheckBox6;
-    private javax.swing.JCheckBox jCheckBox7;
-    private javax.swing.JCheckBox jCheckBox8;
-    private javax.swing.JCheckBox jCheckBox9;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -947,9 +1258,21 @@ public class Student extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JTextField land_number_field;
+    private javax.swing.JTextField line1_field;
+    private javax.swing.JTextField line2_field;
     private javax.swing.JTextField lname_field;
     private javax.swing.JRadioButton male;
+    private javax.swing.JCheckBox maths;
+    private javax.swing.JTextField mobile_field;
+    private javax.swing.JTextField mother_name_feild;
+    private javax.swing.JCheckBox music;
+    private javax.swing.JComboBox<String> other_subject_combo;
+    private javax.swing.JTable other_subject_table;
+    private javax.swing.JCheckBox pts;
+    private javax.swing.JCheckBox science;
+    private javax.swing.JCheckBox sinhala;
     private javax.swing.JTable student_table;
+    private javax.swing.JCheckBox tamil;
     // End of variables declaration//GEN-END:variables
 }

@@ -138,7 +138,7 @@
                                               <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
                                                   <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                                      <Component id="jComboBox1" pref="232" max="32767" attributes="0"/>
+                                                      <Component id="gradeCombo" pref="232" max="32767" attributes="0"/>
                                                       <Component id="jLabel7" alignment="0" min="-2" pref="165" max="-2" attributes="0"/>
                                                       <Component id="fname_field" alignment="0" max="32767" attributes="0"/>
                                                   </Group>
@@ -154,7 +154,7 @@
                                                       <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                                                       <Group type="103" groupAlignment="0" attributes="0">
                                                           <Component id="jLabel9" alignment="0" min="-2" pref="121" max="-2" attributes="0"/>
-                                                          <Component id="jComboBox2" alignment="0" max="32767" attributes="0"/>
+                                                          <Component id="classCombo" alignment="0" max="32767" attributes="0"/>
                                                       </Group>
                                                   </Group>
                                                   <Group type="102" attributes="0">
@@ -202,7 +202,7 @@
                                   <Group type="102" attributes="0">
                                       <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jComboBox2" min="-2" pref="35" max="-2" attributes="0"/>
+                                      <Component id="classCombo" min="-2" pref="35" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -222,7 +222,7 @@
                                           </Group>
                                           <Group type="102" alignment="0" attributes="0">
                                               <EmptySpace max="-2" attributes="0"/>
-                                              <Component id="jComboBox1" min="-2" pref="35" max="-2" attributes="0"/>
+                                              <Component id="gradeCombo" min="-2" pref="35" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>
@@ -262,7 +262,7 @@
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Student First Name"/>
+                        <Property name="text" type="java.lang.String" value="Student Last Name"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="lname_field">
@@ -352,7 +352,7 @@
                         <Property name="text" type="java.lang.String" value="Grade"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JComboBox" name="jComboBox1">
+                    <Component class="javax.swing.JComboBox" name="gradeCombo">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Tahoma" size="12" style="0"/>
@@ -381,7 +381,7 @@
                         <Property name="text" type="java.lang.String" value="Class "/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JComboBox" name="jComboBox2">
+                    <Component class="javax.swing.JComboBox" name="classCombo">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Tahoma" size="12" style="0"/>
@@ -462,7 +462,7 @@
                                           <Group type="102" attributes="0">
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="1" attributes="0">
-                                                  <Component id="jComboBox4" alignment="1" min="-2" pref="459" max="-2" attributes="0"/>
+                                                  <Component id="other_subject_combo" alignment="1" min="-2" pref="459" max="-2" attributes="0"/>
                                                   <Component id="jScrollPane3" alignment="1" min="-2" pref="459" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
@@ -477,7 +477,7 @@
                                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                                       <Component id="jLabel20" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="jComboBox4" min="-2" pref="39" max="-2" attributes="0"/>
+                                      <Component id="other_subject_combo" min="-2" pref="39" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
                                           <Component id="buttonGradient4" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -499,7 +499,7 @@
                                 <Property name="text" type="java.lang.String" value="Select Your Other Subject"/>
                               </Properties>
                             </Component>
-                            <Component class="javax.swing.JComboBox" name="jComboBox4">
+                            <Component class="javax.swing.JComboBox" name="other_subject_combo">
                               <Properties>
                                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                                   <Font name="Tahoma" size="12" style="0"/>
@@ -513,6 +513,9 @@
                                   </StringArray>
                                 </Property>
                               </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="other_subject_comboActionPerformed"/>
+                              </Events>
                               <AuxValues>
                                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                               </AuxValues>
@@ -530,6 +533,9 @@
                                   <Font name="Tahoma" size="14" style="1"/>
                                 </Property>
                               </Properties>
+                              <Events>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonGradient4ActionPerformed"/>
+                              </Events>
                             </Component>
                             <Component class="SMMV.Component.ButtonGradient" name="buttonGradient5">
                               <Properties>
@@ -552,7 +558,7 @@
 
                               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                               <SubComponents>
-                                <Component class="javax.swing.JTable" name="jTable2">
+                                <Component class="javax.swing.JTable" name="other_subject_table">
                                   <Properties>
                                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                                       <Table columnCount="2" rowCount="0">
@@ -620,60 +626,60 @@
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Component id="jCheckBox1" alignment="0" min="-2" max="-2" attributes="0"/>
                                               <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="jCheckBox10" max="32767" attributes="0"/>
+                                                  <Component id="ict" max="32767" attributes="0"/>
                                                   <EmptySpace min="219" pref="219" max="-2" attributes="0"/>
                                               </Group>
                                               <Group type="102" alignment="0" attributes="0">
                                                   <Group type="103" groupAlignment="0" attributes="0">
                                                       <Group type="102" alignment="0" attributes="0">
-                                                          <Component id="jCheckBox6" max="32767" attributes="0"/>
+                                                          <Component id="science" max="32767" attributes="0"/>
                                                           <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
                                                       </Group>
-                                                      <Component id="jCheckBox2" alignment="0" max="32767" attributes="0"/>
+                                                      <Component id="sinhala" alignment="0" max="32767" attributes="0"/>
                                                   </Group>
                                                   <EmptySpace min="-2" pref="120" max="-2" attributes="0"/>
                                                   <Group type="103" groupAlignment="0" attributes="0">
                                                       <Group type="102" alignment="0" attributes="0">
-                                                          <Component id="jCheckBox3" max="32767" attributes="0"/>
+                                                          <Component id="english" max="32767" attributes="0"/>
                                                           <EmptySpace min="15" pref="15" max="-2" attributes="0"/>
                                                       </Group>
                                                       <Group type="102" alignment="0" attributes="0">
-                                                          <Component id="jCheckBox7" max="32767" attributes="0"/>
+                                                          <Component id="buddhist" max="32767" attributes="0"/>
                                                           <EmptySpace min="8" pref="8" max="-2" attributes="0"/>
                                                       </Group>
-                                                      <Component id="jCheckBox15" alignment="0" max="32767" attributes="0"/>
-                                                      <Component id="jCheckBox16" alignment="0" max="32767" attributes="0"/>
-                                                      <Component id="jCheckBox9" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="health" alignment="0" max="32767" attributes="0"/>
+                                                      <Component id="tamil" alignment="0" max="32767" attributes="0"/>
+                                                      <Component id="dance" alignment="0" min="-2" max="-2" attributes="0"/>
                                                   </Group>
                                               </Group>
                                               <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="jCheckBox14" max="32767" attributes="0"/>
+                                                  <Component id="pts" max="32767" attributes="0"/>
                                                   <EmptySpace min="185" pref="185" max="-2" attributes="0"/>
                                               </Group>
-                                              <Component id="jCheckBox11" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="music" alignment="0" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace min="-2" pref="117" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="jCheckBox5" max="32767" attributes="0"/>
+                                                  <Component id="civic" max="32767" attributes="0"/>
                                                   <EmptySpace min="21" pref="21" max="-2" attributes="0"/>
                                               </Group>
                                               <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="jCheckBox4" max="32767" attributes="0"/>
+                                                  <Component id="maths" max="32767" attributes="0"/>
                                                   <EmptySpace min="8" pref="8" max="-2" attributes="0"/>
                                               </Group>
                                               <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="jCheckBox13" max="32767" attributes="0"/>
+                                                  <Component id="history" max="32767" attributes="0"/>
                                                   <EmptySpace min="21" pref="21" max="-2" attributes="0"/>
                                               </Group>
-                                              <Component id="jCheckBox17" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="jCheckBox12" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="geography" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="drama" alignment="0" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="jCheckBox8" alignment="0" min="-2" pref="78" max="-2" attributes="0"/>
+                                              <Component id="art" alignment="0" min="-2" pref="78" max="-2" attributes="0"/>
                                               <Component id="jLabel11" alignment="0" min="-2" pref="204" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace max="32767" attributes="0"/>
@@ -689,38 +695,38 @@
                                   <Component id="jCheckBox1" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="jCheckBox2" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jCheckBox3" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jCheckBox4" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="sinhala" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="english" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="maths" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="jCheckBox6" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jCheckBox7" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jCheckBox5" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="science" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="buddhist" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="civic" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="jCheckBox10" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jCheckBox15" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jCheckBox13" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="ict" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="health" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="history" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="jCheckBox14" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jCheckBox16" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jCheckBox17" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="pts" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="tamil" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="geography" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Component id="jLabel11" min="-2" pref="19" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="jCheckBox9" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jCheckBox11" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jCheckBox12" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="dance" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="music" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="drama" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="jCheckBox8" min="-2" max="-2" attributes="0"/>
+                                  <Component id="art" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
                               </Group>
                           </Group>
@@ -735,7 +741,7 @@
                             <Property name="text" type="java.lang.String" value="Select All Subject"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JCheckBox" name="jCheckBox2">
+                        <Component class="javax.swing.JCheckBox" name="sinhala">
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Times New Roman" size="12" style="1"/>
@@ -743,7 +749,7 @@
                             <Property name="text" type="java.lang.String" value="Sinhala"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JCheckBox" name="jCheckBox3">
+                        <Component class="javax.swing.JCheckBox" name="english">
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Times New Roman" size="12" style="1"/>
@@ -751,7 +757,7 @@
                             <Property name="text" type="java.lang.String" value="English"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JCheckBox" name="jCheckBox4">
+                        <Component class="javax.swing.JCheckBox" name="maths">
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Times New Roman" size="12" style="1"/>
@@ -759,7 +765,7 @@
                             <Property name="text" type="java.lang.String" value="Mathematics"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JCheckBox" name="jCheckBox5">
+                        <Component class="javax.swing.JCheckBox" name="civic">
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Times New Roman" size="12" style="1"/>
@@ -767,7 +773,7 @@
                             <Property name="text" type="java.lang.String" value="Civic"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JCheckBox" name="jCheckBox6">
+                        <Component class="javax.swing.JCheckBox" name="science">
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Times New Roman" size="12" style="1"/>
@@ -775,7 +781,7 @@
                             <Property name="text" type="java.lang.String" value="Science"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JCheckBox" name="jCheckBox7">
+                        <Component class="javax.swing.JCheckBox" name="buddhist">
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Times New Roman" size="12" style="1"/>
@@ -783,7 +789,7 @@
                             <Property name="text" type="java.lang.String" value="Buddhist"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JCheckBox" name="jCheckBox8">
+                        <Component class="javax.swing.JCheckBox" name="art">
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Times New Roman" size="12" style="1"/>
@@ -791,7 +797,7 @@
                             <Property name="text" type="java.lang.String" value="Art"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JCheckBox" name="jCheckBox9">
+                        <Component class="javax.swing.JCheckBox" name="dance">
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Times New Roman" size="12" style="1"/>
@@ -799,7 +805,7 @@
                             <Property name="text" type="java.lang.String" value="Dancing"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JCheckBox" name="jCheckBox10">
+                        <Component class="javax.swing.JCheckBox" name="ict">
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Times New Roman" size="12" style="1"/>
@@ -807,7 +813,7 @@
                             <Property name="text" type="java.lang.String" value="ICT"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JCheckBox" name="jCheckBox11">
+                        <Component class="javax.swing.JCheckBox" name="music">
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Times New Roman" size="12" style="1"/>
@@ -815,7 +821,7 @@
                             <Property name="text" type="java.lang.String" value="Music"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JCheckBox" name="jCheckBox12">
+                        <Component class="javax.swing.JCheckBox" name="drama">
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Times New Roman" size="12" style="1"/>
@@ -823,7 +829,7 @@
                             <Property name="text" type="java.lang.String" value="Drama"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JCheckBox" name="jCheckBox13">
+                        <Component class="javax.swing.JCheckBox" name="history">
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Times New Roman" size="12" style="1"/>
@@ -831,7 +837,7 @@
                             <Property name="text" type="java.lang.String" value="History"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JCheckBox" name="jCheckBox14">
+                        <Component class="javax.swing.JCheckBox" name="pts">
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Times New Roman" size="12" style="1"/>
@@ -839,7 +845,7 @@
                             <Property name="text" type="java.lang.String" value="P.T.S"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JCheckBox" name="jCheckBox15">
+                        <Component class="javax.swing.JCheckBox" name="health">
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Times New Roman" size="12" style="1"/>
@@ -847,7 +853,7 @@
                             <Property name="text" type="java.lang.String" value="Health"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JCheckBox" name="jCheckBox16">
+                        <Component class="javax.swing.JCheckBox" name="tamil">
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Times New Roman" size="12" style="1"/>
@@ -855,7 +861,7 @@
                             <Property name="text" type="java.lang.String" value="Tamil"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JCheckBox" name="jCheckBox17">
+                        <Component class="javax.swing.JCheckBox" name="geography">
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Times New Roman" size="12" style="1"/>
@@ -901,13 +907,13 @@
                                       <Group type="102" alignment="1" attributes="0">
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Component id="jLabel12" min="-2" pref="232" max="-2" attributes="0"/>
-                                              <Component id="fname_field1" min="-2" pref="300" max="-2" attributes="0"/>
-                                              <Component id="fname_field4" alignment="0" min="-2" pref="300" max="-2" attributes="0"/>
+                                              <Component id="mother_name_feild" min="-2" pref="300" max="-2" attributes="0"/>
+                                              <Component id="mobile_field" alignment="0" min="-2" pref="300" max="-2" attributes="0"/>
                                               <Component id="jLabel15" alignment="0" min="-2" pref="232" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace pref="62" max="32767" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="fname_field5" alignment="0" min="-2" pref="300" max="-2" attributes="0"/>
+                                              <Component id="land_number_field" alignment="0" min="-2" pref="300" max="-2" attributes="0"/>
                                               <Component id="jLabel16" alignment="0" min="-2" pref="232" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace min="-2" pref="349" max="-2" attributes="0"/>
@@ -919,12 +925,12 @@
                                       <Group type="102" alignment="1" attributes="0">
                                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="fname_field2" min="-2" pref="300" max="-2" attributes="0"/>
+                                              <Component id="father_name_field" min="-2" pref="300" max="-2" attributes="0"/>
                                               <Component id="jLabel13" min="-2" pref="232" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="fname_field3" min="-2" pref="300" max="-2" attributes="0"/>
+                                              <Component id="guardian_name_field" min="-2" pref="300" max="-2" attributes="0"/>
                                               <Component id="jLabel14" min="-2" pref="232" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
@@ -955,11 +961,11 @@
                                       <Group type="103" alignment="0" groupAlignment="1" attributes="0">
                                           <Component id="jLabel22" min="-2" pref="685" max="-2" attributes="0"/>
                                           <Group type="102" attributes="0">
-                                              <Component id="fname_field6" min="-2" pref="349" max="-2" attributes="0"/>
+                                              <Component id="line1_field" min="-2" pref="349" max="-2" attributes="0"/>
                                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
                                                   <Component id="jLabel21" min="-2" pref="232" max="-2" attributes="0"/>
-                                                  <Component id="fname_field7" min="-2" pref="349" max="-2" attributes="0"/>
+                                                  <Component id="line2_field" min="-2" pref="349" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
                                           <Component id="jLabel26" alignment="1" min="-2" pref="685" max="-2" attributes="0"/>
@@ -987,14 +993,14 @@
                                   </Group>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="fname_field3" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
-                                      <Component id="fname_field2" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                                      <Component id="guardian_name_field" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                                      <Component id="father_name_field" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <Group type="102" attributes="0">
                                   <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="fname_field1" min="-2" pref="35" max="-2" attributes="0"/>
+                                  <Component id="mother_name_feild" min="-2" pref="35" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -1002,12 +1008,12 @@
                               <Group type="102" attributes="0">
                                   <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="fname_field4" min="-2" pref="35" max="-2" attributes="0"/>
+                                  <Component id="mobile_field" min="-2" pref="35" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
                                   <Component id="jLabel16" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="fname_field5" min="-2" pref="35" max="-2" attributes="0"/>
+                                  <Component id="land_number_field" min="-2" pref="35" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
@@ -1021,8 +1027,8 @@
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="fname_field6" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
-                              <Component id="fname_field7" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                              <Component id="line1_field" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                              <Component id="line2_field" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
@@ -1068,7 +1074,7 @@
                     <Property name="text" type="java.lang.String" value="Mother&apos;s Name"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="fname_field1">
+                <Component class="javax.swing.JTextField" name="mother_name_feild">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="12" style="0"/>
@@ -1086,14 +1092,14 @@
                     <Property name="text" type="java.lang.String" value="Father&apos;s Name"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="fname_field2">
+                <Component class="javax.swing.JTextField" name="father_name_field">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="12" style="0"/>
                     </Property>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="fname_field3">
+                <Component class="javax.swing.JTextField" name="guardian_name_field">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="12" style="0"/>
@@ -1122,7 +1128,7 @@
                     <Property name="text" type="java.lang.String" value="Mobile Number"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="fname_field4">
+                <Component class="javax.swing.JTextField" name="mobile_field">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="12" style="0"/>
@@ -1140,7 +1146,7 @@
                     <Property name="text" type="java.lang.String" value="Land Number"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="fname_field5">
+                <Component class="javax.swing.JTextField" name="land_number_field">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="12" style="0"/>
@@ -1191,6 +1197,9 @@
                       <Font name="Tahoma" size="14" style="1"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonGradient1ActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="SMMV.Component.ButtonGradient" name="buttonGradient2">
                   <Properties>
@@ -1220,7 +1229,7 @@
                     </Property>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="fname_field6">
+                <Component class="javax.swing.JTextField" name="line1_field">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="12" style="0"/>
@@ -1238,7 +1247,7 @@
                     <Property name="text" type="java.lang.String" value="Enter Address Line 02"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="fname_field7">
+                <Component class="javax.swing.JTextField" name="line2_field">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Tahoma" size="12" style="0"/>
